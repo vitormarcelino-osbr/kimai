@@ -12,7 +12,7 @@ ARG COMPOSER_VER="latest"
 # Branch name
 ARG KIMAI="main"
 # Timezone for images
-ARG TIMEZONE="Europe/Berlin"
+ARG TIMEZONE="America/Sao_Paulo"
 
 ###########################
 # Shared tools
@@ -24,7 +24,7 @@ FROM alpine:latest AS git-dev
 ARG KIMAI
 ARG TIMEZONE
 RUN apk add --no-cache git && \
-    git clone --depth 1 --branch ${KIMAI} https://github.com/kimai/kimai.git /opt/kimai
+    git clone --depth 1 --branch ${KIMAI} https://github.com/vitormarcelino-osbr/kimai.git /opt/kimai
 
 # production kimai source
 FROM git-dev AS git-prod
