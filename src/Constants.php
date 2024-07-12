@@ -25,7 +25,7 @@ class Constants
     /**
      * The software name
      */
-    public const SOFTWARE = 'Kimai';
+    public const SOFTWARE = 'Portal OSBR';
     /**
      * Used in multiple views
      */

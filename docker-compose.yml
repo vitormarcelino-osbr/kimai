@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+
+  kimai:
+    image: kimai/kimai2
+    volumes:
+      - data:/opt/kimai/var/data
+    ports:
+      - 8001:8001
+    environment:
+      - ADMINMAIL=vitor@vitormarcelino.com.br
+      - ADMINPASS=abcd@1234
+      - SOFTWARE="VM CONSULT"
+      - "DATABASE_URL=mysql://kimai:Kklosntb23!23@172.17.0.1/kimai?charset=utf8mb4&serverVersion=8.3.0"
+      - TRUSTED_HOSTS=nginx,localhost,127.0.0.1
+    restart: unless-stopped
+
+volumes:
+  data:
