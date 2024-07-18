@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ report_title }}</title>
+</head>
+<body>
+<table>
+    <thead>
+        <td colspan="10">
+            <p><strong>{{ report_title }}</strong></p>
+        </td>
+        <tr>
+            <td colspan="10"><p>&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td colspan="7"><strong> {{ timesheets is empty ? 'Sem dados para apresentar!' : 'Colaborador: ' ~ timesheets[0].user.username }}</strong></td>
+            <td colspan="2">
+                <p style="text-align: right;">
+                    <strong>Total de horas:</strong>
+                </p>
+            </td>
+            <td align="right">
+                <p><strong>{{ totalHours|number_format(2, ':', '.') }}</strong></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10"><p>&nbsp;</p></td>
+        </tr>
+        <tr>
+            <th><strong>Data</strong></th>
+            <th><strong>Cliente</strong></th>
+            <th><strong>Projeto</strong></th>
+            <th><strong>Colaborador</strong></th>
+            <th><strong>Entrada</strong></th>
+            <th><strong>Saída</strong></th>
+            <th><strong>Atividade</strong></th>
+            <th><strong>Descrição</strong></th>
+            <th><strong>Horas</strong></th>
+            <th><strong>Horas / Minutos</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for timesheet in timesheets %}
+        {% set weekend = timesheet.begin|date("N") %}
+        <tr {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.begin|date('d/m/Y', timesheet.timezone) }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.project.customer.name }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.project.name }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.user.username }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.begin|date('H:i', timesheet.timezone) }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.end|date('H:i', timesheet.timezone) }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.activity.name }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.description }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.duration|date('H:i', false) }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ (timesheet.duration|date('i', false)/60+timesheet.duration|date('H', false))|number_format(2, ',', '.')  }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="10"><p>&nbsp;</p></td>
+    </tr>
+    <tr>
+        <td colspan="10"  align="right" style="text-align: right;">
+            <p style="text-align: right;"><strong>Total de horas: {{ totalHours|number_format(2, ':', '.') }}</strong></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
