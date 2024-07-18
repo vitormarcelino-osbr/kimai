@@ -39,6 +39,7 @@ final class ReportingService
                 $event->addReport(new Report('weekly_users_list', 'report_weekly_users', 'report_weekly_users', 'users'));
                 $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users', 'users'));
                 $event->addReport(new Report('yearly_users_list', 'report_yearly_users', 'report_yearly_users', 'users'));
+                $event->addReport(new Report('custom_report', 'custom_report', 'Relatório Geral', 'users'));
             }
 
             if ($this->security->isGranted('report:project')) {
