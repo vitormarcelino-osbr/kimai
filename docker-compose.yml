@@ -1,19 +1,56 @@
 version: '3.5'
 services:
 
+  # Database
+  database:
+    image: mysql:8.3.0
+    container_name: kimai_database
+    command: mysqld --default_authentication_plugin=mysql_native_password
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=kimai
+      - MYSQL_USER=kimaiuser
+      - MYSQL_PASSWORD=kimaipassword
+      - MYSQL_ROOT_PASSWORD=changemeplease
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: mysqladmin -p$$MYSQL_ROOT_PASSWORD ping -h localhost
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+
   kimai:
-    image: kimai/kimai2
+    # image: kimai/kimai2
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: kimai_app
     volumes:
       - data:/opt/kimai/var/data
+      - ./src/Constants.php:/opt/kimai/src/Constants.php
+      - ./src/Controller/Reporting/CustomReportController.php:/opt/kimai/src/Controller/Reporting/CustomReportController.php
+      - ./src/Reporting/CustomReportFilterType.php:/opt/kimai/src/Reporting/CustomReportFilterType.php
+      - ./src/Reporting/CustomReportQuery.php:/opt/kimai/src/Reporting/CustomReportQuery.php
+      - ./src/Reporting/ReportingService.php:/opt/kimai/src/Reporting/ReportingService.php
+      - ./templates/reporting/reporting_general.html.twig:/opt/kimai/templates/reporting/reporting_general.html.twig
+      - ./templates/reporting/reporting_general_export.html.twig:/opt/kimai/templates/reporting/reporting_general_export.html.twig
     ports:
       - 8001:8001
     environment:
       - ADMINMAIL=vitor@vitormarcelino.com.br
       - ADMINPASS=abcd@1234
       - SOFTWARE="VM CONSULT"
-      - "DATABASE_URL=mysql://kimai:Kklosntb23!23@172.17.0.1/kimai?charset=utf8mb4&serverVersion=8.3.0"
+      - APP_ENV=dev
+      - "DATABASE_URL=mysql://kimaiuser:kimaipassword@database/kimai?charset=utf8mb4&serverVersion=8.3.0"
       - TRUSTED_HOSTS=nginx,localhost,127.0.0.1
     restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
 
 volumes:
   data:
+  mysql:
