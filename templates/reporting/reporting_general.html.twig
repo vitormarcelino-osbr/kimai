@@ -8,6 +8,9 @@
     'client':    {'class': 'd-md-table-cell', 'title': 'client'},
 }) %}
 {% set columns = columns|merge({
+    'number':    {'class': 'd-md-table-cell', 'title': 'number'},
+}) %}
+{% set columns = columns|merge({
     'project':    {'class': 'd-md-table-cell', 'title': 'project'},
 }) %}
 {% set columns = columns|merge({
@@ -23,7 +26,7 @@
     'activity':    {'class': 'd-md-table-cell', 'title': 'activity'},
 }) %}
 {% set columns = columns|merge({
-    'description':    {'class': 'd-md-table-cell', 'title': 'description'},
+    'description':    {'class': 'd-md-table-cell  w-25', 'title': 'description'},
 }) %}
 {% set columns = columns|merge({
     'hours':    {'class': 'd-md-table-cell', 'title': 'hours'},
@@ -72,6 +75,7 @@
                             {{ timesheet.begin|date('d/m/Y', timesheet.timezone) }}
                         </td>
                         <td>{{ timesheet.project.customer.name }}</td>
+                        <td>{{ timesheet.project.number }}</td>
                         <td>{{ timesheet.project.name }}</td>
                         <td>{{ timesheet.user.username }}</td>
                         <td>{{ timesheet.begin|date('H:i', timesheet.timezone) }}</td>
@@ -83,7 +87,7 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td colspan="6" style="text-align: right;">
                         <strong>Total de horas:</strong>
                     </td>

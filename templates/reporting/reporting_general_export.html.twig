@@ -7,29 +7,10 @@
 <body>
 <table>
     <thead>
-        <td colspan="10">
-            <p><strong>{{ report_title }}</strong></p>
-        </td>
-        <tr>
-            <td colspan="10"><p>&nbsp;</p></td>
-        </tr>
-        <tr>
-            <td colspan="7"><strong> {{ timesheets is empty ? 'Sem dados para apresentar!' : 'Colaborador: ' ~ timesheets[0].user.username }}</strong></td>
-            <td colspan="2">
-                <p style="text-align: right;">
-                    <strong>Total de horas:</strong>
-                </p>
-            </td>
-            <td align="right">
-                <p><strong>{{ totalHours|number_format(2, ':', '.') }}</strong></p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="10"><p>&nbsp;</p></td>
-        </tr>
         <tr>
             <th><strong>Data</strong></th>
             <th><strong>Cliente</strong></th>
+            <th><strong>Conta</strong></th>
             <th><strong>Projeto</strong></th>
             <th><strong>Colaborador</strong></th>
             <th><strong>Entrada</strong></th>
@@ -46,6 +27,7 @@
         <tr {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>
             <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.begin|date('d/m/Y', timesheet.timezone) }}</td>
             <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.project.customer.name }}</td>
+            <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.project.number }}</td>
             <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.project.name }}</td>
             <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.user.username }}</td>
             <td {{ weekend >= 6 ? 'bgcolor="yellow"' : '' }}>{{ timesheet.begin|date('H:i', timesheet.timezone) }}</td>
@@ -57,10 +39,7 @@
         </tr>
     {% endfor %}
     <tr>
-        <td colspan="10"><p>&nbsp;</p></td>
-    </tr>
-    <tr>
-        <td colspan="10"  align="right" style="text-align: right;">
+        <td colspan="11"  align="right" style="text-align: right;">
             <p style="text-align: right;"><strong>Total de horas: {{ totalHours|number_format(2, ':', '.') }}</strong></p>
         </td>
     </tr>
