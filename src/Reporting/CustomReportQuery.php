@@ -18,19 +18,19 @@ final class CustomReportQuery
     private ?Customer $customer = null;
     private ?User $user;
 
-    public function __construct(\DateTime $month, User $user)
+    public function __construct(\DateTime $month, User $user = null)
     {
         $this->month = clone $month;
         $this->user = $user;
     }
 
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
